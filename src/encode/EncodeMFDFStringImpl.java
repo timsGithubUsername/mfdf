@@ -2,7 +2,19 @@ package encode;
 
 import java.nio.charset.StandardCharsets;
 
-public class EncodeMFDFStringV1 implements EncodeMFDF {
+public class EncodeMFDFStringImpl implements EncodeMFDFString {
+    /*
+     NAME | FORMAT | SIZE | DATA
+    |--------Header-------|-data-|
+
+    Header:
+    Name (4Bytes): "MFDF"
+    Format (4Bytes): 16 or 8 for UTF16 or UTF8
+    Size (4Bytes): Number of Symbols in the Message
+
+    Data:
+    Bytes for the String in UTF16 or UTF8
+     */
     final byte[] NAME = "MFDF".getBytes(StandardCharsets.UTF_8);
     final int FORMAT = 16, HEADER_SIZE = 12;
 

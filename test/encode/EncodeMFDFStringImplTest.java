@@ -8,14 +8,14 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EncodeMFDFStringV1Test {
+class EncodeMFDFStringImplTest {
     static String msg;
     static String msg16;
     static String name;
     static int format8;
     static int format16;
     static int formatInvalid;
-    static EncodeMFDF encoder;
+    static EncodeMFDFString encoder;
 
     @BeforeAll
     private static void setData(){
@@ -26,7 +26,7 @@ class EncodeMFDFStringV1Test {
         format16 = 16;
         formatInvalid = 32;
 
-        encoder = new EncodeMFDFStringV1();
+        encoder = new EncodeMFDFStringImpl();
     }
 
     @Test
@@ -44,8 +44,8 @@ class EncodeMFDFStringV1Test {
         byte[] msgBytes = Arrays.copyOfRange(mfdfBytes, 12, mfdfBytes.length);
 
         assertEquals(name, new String(nameBytes, StandardCharsets.UTF_8));
-        assertEquals(format, fromByteArray(formatBytes));
-        assertEquals(size, fromByteArray(sizeBytes));
+        assertEquals(format, intFromByteArray(formatBytes));
+        assertEquals(size, intFromByteArray(sizeBytes));
         assertEquals(msg, new String(msgBytes, StandardCharsets.UTF_16));
 
         //with utf 16 symbols
@@ -59,8 +59,8 @@ class EncodeMFDFStringV1Test {
         msgBytes = Arrays.copyOfRange(mfdfBytes, 12, mfdfBytes.length);
 
         assertEquals(name, new String(nameBytes, StandardCharsets.UTF_8));
-        assertEquals(format, fromByteArray(formatBytes));
-        assertEquals(size, fromByteArray(sizeBytes));
+        assertEquals(format, intFromByteArray(formatBytes));
+        assertEquals(size, intFromByteArray(sizeBytes));
         assertEquals(msg16, new String(msgBytes, StandardCharsets.UTF_16));
     }
 
@@ -78,8 +78,8 @@ class EncodeMFDFStringV1Test {
         byte[] msgBytes = Arrays.copyOfRange(mfdfBytes, 12, mfdfBytes.length);
 
         assertEquals(name, new String(nameBytes, StandardCharsets.UTF_8));
-        assertEquals(format, fromByteArray(formatBytes));
-        assertEquals(size, fromByteArray(sizeBytes));
+        assertEquals(format, intFromByteArray(formatBytes));
+        assertEquals(size, intFromByteArray(sizeBytes));
         assertEquals(msg, new String(msgBytes, StandardCharsets.UTF_8));
 
         //utf16
@@ -94,8 +94,8 @@ class EncodeMFDFStringV1Test {
         msgBytes = Arrays.copyOfRange(mfdfBytes, 12, mfdfBytes.length);
 
         assertEquals(name, new String(nameBytes, StandardCharsets.UTF_8));
-        assertEquals(format, fromByteArray(formatBytes));
-        assertEquals(size, fromByteArray(sizeBytes));
+        assertEquals(format, intFromByteArray(formatBytes));
+        assertEquals(size, intFromByteArray(sizeBytes));
         assertEquals(msg, new String(msgBytes, StandardCharsets.UTF_16));
 
         //invalid
@@ -109,22 +109,22 @@ class EncodeMFDFStringV1Test {
         msgBytes = Arrays.copyOfRange(mfdfBytes, 12, mfdfBytes.length);
 
         assertEquals(name, new String(nameBytes, StandardCharsets.UTF_8));
-        assertEquals(format, fromByteArray(formatBytes));
-        assertEquals(size, fromByteArray(sizeBytes));
+        assertEquals(format, intFromByteArray(formatBytes));
+        assertEquals(size, intFromByteArray(sizeBytes));
         assertEquals(msg, new String(msgBytes, StandardCharsets.UTF_16));
     }
 
-    private int fromByteArray(byte[] bytes) {
+    private int intFromByteArray(byte[] bytes) {
         return ((bytes[0] & 0xFF) << 24) |
                 ((bytes[1] & 0xFF) << 16) |
                 ((bytes[2] & 0xFF) << 8 ) |
                 ((bytes[3] & 0xFF));
     }
 
-    private void printByteArray(byte[] array, int format){
-        for (byte b : array) {
-            System.out.print(b + " ");
-        }
-        System.out.println("\n");
-    }
+//    private void printByteArray(byte[] array, int format){
+//        for (byte b : array) {
+//            System.out.print(b + " ");
+//        }
+//        System.out.println("\n");
+//    }
 }

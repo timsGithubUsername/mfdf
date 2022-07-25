@@ -1,6 +1,6 @@
 package encode;
 
-public interface EncodeMFDF {
+public interface EncodeMFDFString {
     byte[] getByteCode(String msg);
     byte[] getByteCode(String msg, int format);
 }
