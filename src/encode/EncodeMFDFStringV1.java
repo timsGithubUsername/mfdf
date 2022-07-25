@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 
 public class EncodeMFDFStringV1 implements EncodeMFDF {
     final byte[] NAME = "MFDF".getBytes(StandardCharsets.UTF_8);
-    final int FORMAT = 16;
+    final int FORMAT = 16, HEADER_SIZE = 12;
 
     /**
      * Get the byte code in MFDF-Format with an UTF16 Message
@@ -57,11 +57,11 @@ public class EncodeMFDFStringV1 implements EncodeMFDF {
     //Format: 8, 16, 32; 4 Byte
     //Size: size of the Data Chunk; 4 Byte
     private byte[] prepareHeader(byte[] size, byte[] format) {
-        byte[] output = new byte[16];
+        byte[] output = new byte[HEADER_SIZE];
         fillArray(output, NAME, 0);
         fillArray(output, format, 4);
         fillArray(output, size, 8);
-        return null;
+        return output;
     }
 
     //convert a int to a 4 long Byte array
